@@ -7,8 +7,8 @@ screen_height = 600
 screen_width = 1100
 screen = pygame.display.set_mode((screen_width, screen_height))
 
-running = [pygame.image.load(os.path.join("Assets/64x64", "run1.png")),
-        pygame.image.load(os.path.join("Assets/64x64", "run2.png"))]
+running = [pygame.image.load(os.path.join("Assets/64x64", "run1better.png")),
+        pygame.image.load(os.path.join("Assets/64x64", "run2better.png"))]
 jumping = pygame.image.load(os.path.join("Assets/64x64", "jumping.png"))
 ducking = [pygame.image.load(os.path.join("Assets/64x64", "duck1.png")),
         pygame.image.load(os.path.join("Assets/64x64", "duck2.png"))]
@@ -77,10 +77,10 @@ class cat:
         self.image = self.run_image[self.step_index // 5]
         self.cat_rectangle = self.image.get_rect()
         self.cat_rectangle.x = self.x_position
-        self.cat_rectangle.x = self.y_position
+        self.cat_rectangle.y = self.y_position
         self.step_index += 1
 
-    def jum(self):
+    def jump(self):
         pass
 
     def draw(self, SCREEN):
