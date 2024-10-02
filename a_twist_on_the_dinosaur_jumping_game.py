@@ -1,5 +1,6 @@
 import pygame 
 import os 
+import random
 
 pygame.init()
 
@@ -23,6 +24,8 @@ big_box =  [pygame.image.load(os.path.join("Assets/64x64", "Box.png")),
 
 bird = [pygame.image.load(os.path.join("Assets/64x64", "Bird1.png")),
         pygame.image.load(os.path.join("Assets/64x64", "Bird2.png"))]
+
+cloud = pygame.image.load(os.path.join("Assets/64x64", "Cloud.png"))
 
 background = pygame.image.load(os.path.join("Assets/64x64", "Track.png"))
 
@@ -97,15 +100,34 @@ class cat:
             self.cat_jump = False
             self.jumping = self.jump_velocity
 
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image, (self.cat_rectangle.x, self.cat_rectangle.y))
+    def draw(self, screen):
+        screen.blit(self.image, (self.cat_rectangle.x, self.cat_rectangle.y))
+
+class cloud_1:
+    def __init__(self):
+        self.x = screen_width + random.randint(800, 1000)
+        self.y = random.randint(50, 100)
+        self.image = cloud
+        self.width = self.image.get_width()
+
+    def update(self):
+        self.x -=game_speed
+        if self.x < -self.width:
+            self.x = screen_width + random.randint(2500, 3000)
+            self.y = random.randint (50, 100)
+    
+    def draw (self, screen):
+        screen.blit(self.image, (self.x, self.y))
 
 
 
 def main () : 
+    global game_speed
     run = True 
     clock = pygame.time.Clock()
     player = cat()
+    cloud = cloud_1
+    game_speed = 14
 
 
     while run:
@@ -118,6 +140,9 @@ def main () :
 
         player.draw(screen)
         player.update(user_input)
+
+        cloud.draw(screen)
+        cloud.update()
 
         clock.tick(30)
         pygame.display.update()
