@@ -47,7 +47,45 @@ class cat:
         self.cat_rectangle.y = self.y_position
 
     def update(self, user_input) :
+        if self.cat_duck:
+            self.duck()
+        if self.cat_run:
+            self.run()
+        if self.cat_jump:
+            self.jump()
         
+        if self.step_index >= 10: 
+            self.step_index = 0
+        
+        if user_input[pygame.K_UP] and not self.cat_jump:
+            self.cat_duck = False
+            self.cat_run = False
+            self.cat_jump = True
+        elif user_input[pygame.K_DOWN] and not self.cat_jump:
+            self.cat_duck = True
+            self.cat_run = False
+            self.cat_jump = False
+        elif not (self.cat_jump or user_input[pygame.K_DOWN]):
+            self.cat_duck = False
+            self.cat_run = True
+            self.cat_jump = False
+
+    def duck(self):
+        pass
+
+    def run(self):
+        self.image = self.run_image[self.step_index // 5]
+        self.cat_rectangle = self.image.get_rect()
+        self.cat_rectangle.x = self.x_position
+        self.cat_rectangle.x = self.y_position
+        self.step_index += 1
+
+    def jum(self):
+        pass
+
+    def draw(self, SCREEN):
+        SCREEN.blit(self.image, (self.cat_rectangle.x, self.cat_rectangle.y))
+
 
 
 def main () : 
@@ -61,7 +99,7 @@ def main () :
             if event.type == pygame.QUIT:
                 run = False
 
-        Screen.fill ((255, 255, 255,))
+        screen.fill ((255, 255, 255,))
         user_input = pygame.key.get_pressed()
 
         player.draw(screen)
