@@ -10,8 +10,8 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 running = [pygame.image.load(os.path.join("Assets/64x64", "run1better.png")),
         pygame.image.load(os.path.join("Assets/64x64", "run2better.png"))]
 jumping = pygame.image.load(os.path.join("Assets/64x64", "jumping.png"))
-ducking = [pygame.image.load(os.path.join("Assets/64x64", "duck1.png")),
-        pygame.image.load(os.path.join("Assets/64x64", "duck2.png"))]
+ducking = [pygame.image.load(os.path.join("Assets/64x64", "duck2.png")),
+        pygame.image.load(os.path.join("Assets/64x64", "duck3.png"))]
 
 small_box = [pygame.image.load(os.path.join("Assets/64x64", "Boxsmall1.png")),
              pygame.image.load(os.path.join("Assets/64x64", "Boxsmall2.png")), 
@@ -29,6 +29,7 @@ background = pygame.image.load(os.path.join("Assets/64x64", "Track.png"))
 class cat:
     x_position = 80
     y_position = 310
+    y_position_duck = 320
 
 
     def __init__(self) :
@@ -71,7 +72,12 @@ class cat:
             self.cat_jump = False
 
     def duck(self):
-        pass
+        self.image = self.duck_image[self.step_index // 5]
+        self.cat_rectangle = self.image.get_rect()
+        self.cat_rectangle.x = self.x_position
+        self.cat_rectangle.y = self.y_position_duck
+        self.step_index += 1
+
 
     def run(self):
         self.image = self.run_image[self.step_index // 5]
