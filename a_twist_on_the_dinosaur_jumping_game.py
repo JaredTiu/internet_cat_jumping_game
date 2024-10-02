@@ -30,6 +30,7 @@ class cat:
     x_position = 80
     y_position = 310
     y_position_duck = 320
+    jump_velocity = 8.5
 
 
     def __init__(self) :
@@ -42,6 +43,7 @@ class cat:
         self.cat_jump = False
 
         self.step_index = 0 
+        self.jumping = self.jump_velocity
         self.image = self.run_image[0]
         self.cat_rectangle = self.image.get_rect()
         self.cat_rectangle.x = self.x_position
@@ -87,7 +89,13 @@ class cat:
         self.step_index += 1
 
     def jump(self):
-        pass
+        self.image = self.jump_image
+        if self.cat_jump:
+            self.cat_rectangle.y -= self.jumping * 4
+            self.jumping -= 0.8
+        if self.jumping < - self.jump_velocity: 
+            self.cat_jump = False
+            self.jumping = self.jump_velocity
 
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.cat_rectangle.x, self.cat_rectangle.y))
