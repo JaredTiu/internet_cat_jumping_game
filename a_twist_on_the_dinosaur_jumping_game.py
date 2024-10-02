@@ -27,7 +27,7 @@ bird = [pygame.image.load(os.path.join("Assets/64x64", "Bird1.png")),
 
 cloud_image = pygame.image.load(os.path.join("Assets/64x64", "Cloud.png"))
 
-background = pygame.image.load(os.path.join("Assets/64x64", "Track.png"))
+background_image = pygame.image.load(os.path.join("Assets/64x64", "Track.png"))
 
 class cat:
     x_position = 80
@@ -122,12 +122,24 @@ class Cloud:
 
 
 def main () : 
-    global game_speed
+    global game_speed, x_position_background, y_position_background
     run = True 
     clock = pygame.time.Clock()
     player = cat()
     cloud_image = Cloud()
     game_speed = 14
+    x_position_background = 0
+    y_position_background = 360
+
+    def background(): 
+        global x_position_background, y_position_background
+        image_width = background_image.get_width()
+        screen.blit(background_image, (x_position_background, y_position_background))
+        screen.blit(background_image, (image_width + x_position_background, y_position_background))
+        if x_position_background <= -image_width:
+            screen.blit(background_image, (image_width + x_position_background, y_position_background))
+            x_position_background = 0
+        x_position_background -= game_speed
 
 
     while run:
@@ -140,6 +152,8 @@ def main () :
 
         player.draw(screen)
         player.update(user_input)
+
+        background()
 
         cloud_image.draw(screen)
         cloud_image.update()
