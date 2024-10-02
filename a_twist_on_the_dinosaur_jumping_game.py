@@ -9,7 +9,17 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 running = [pygame.image.load(os.path.join("Assets/64x64", "run1.png")),
         pygame.image.load(os.path.join("Assets/64x64", "run2.png"))]
-Jumping = pygame.image.load(os.path.join("Assets/64x64", "jump1.png"))
+jumping = pygame.image.load(os.path.join("Assets/64x64", "jumping.png"))
+ducking = [pygame.image.load(os.path.join("Assets/64x64", "duck1.png")),
+        pygame.image.load(os.path.join("Assets/64x64", "duck2.png"))]
+
+small_box = [pygame.image.load(os.path.join("Assets/64x64", "Boxsmall1.png")),
+             pygame.image.load(os.path.join("Assets/64x64", "Boxsmall2.png")), 
+             pygame.image.load(os.path.join("Assets/64x64", "Boxsmall3.png")),]
+
+big_box =  [pygame.image.load(os.path.join("Assets/64x64", "Box.png")),
+            pygame.image.load(os.path.join("Assets/64x64", "Boxbig2.png")), 
+            pygame.image.load(os.path.join("Assets/64x64", "Boxbig3.png")),]
 
 
 def main () : 
