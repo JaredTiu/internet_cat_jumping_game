@@ -33,7 +33,7 @@ background_image = pygame.image.load(os.path.join("Assets/64x64", "Track.png"))
 
 class cat:
     x_position = 80
-    y_position = 310
+    y_position = 325
     y_position_duck = 320
     jump_velocity = 8.5
 
@@ -121,7 +121,7 @@ class Cloud:
     def draw (self, screen):
         screen.blit(self.image, (self.x, self.y))
 
-class obstacle:
+class obstacle_:
     def __init__(self, image, type): 
         self.image = image
         self.type = type
@@ -136,19 +136,19 @@ class obstacle:
     def draw(self, screen):
         screen.blit(self.image[self.type], self.rect)
 
-class small_dog_(obstacle):
+class small_dog_(obstacle_):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
         self.rect.y = 290
 
-class big_dog_(obstacle):
+class big_dog_(obstacle_):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
         self.rect.y = 270
 
-class bird_(obstacle):
+class bird_(obstacle_):
     def __init__(self, image):
         self.type = 0
         super().__init__(image, self.type)
@@ -158,8 +158,8 @@ class bird_(obstacle):
     def draw(self, screen):
         if self.index >= 9:
             self.index = 0
-            screen.blit(self.image[self.index//5], self.rect)
-            self.index += 1
+        screen.blit(self.image[self.index//5], self.rect)
+        self.index += 1
 
 
 
@@ -218,10 +218,10 @@ def main () :
             elif random.randint(0, 2) == 2:
                 obstacles.append(bird_(bird))
         
-        for obstacle in obstacles:
-            obstacle.draw(screen)
-            obstacle.update()
-            if player.cat_rectangle.colliderect(obstacle.rect):
+        for obstacle_ in obstacles:
+            obstacle_.draw(screen)
+            obstacle_.update()
+            if player.cat_rectangle.colliderect(obstacle_.rect):
                 pygame.time.delay(2000)
                 death_count += 1
                 menu(death_count)
@@ -248,13 +248,13 @@ def menu(death_count) :
         if death_count == 0:
             text = font.render("Press any key to start", True, (0, 0, 0))
         elif death_count > 0:
-            text = font.render("Press any key to start", True, (0, 0, 0))
-            score = font.render("Score :" + str(points), True, (0, 0, 0))
+            text = font.render("Press any key to Restart", True, (0, 0, 0))
+            score = font.render("Score : " + str(points), True, (0, 0, 0))
             score_rectangle = score.get_rect()
             score_rectangle.center = (screen_width // 2, screen_height // 2 + 50)
             screen.blit(score, score_rectangle)
         text_rectangle = text.get_rect()
-        text_rectangle.center = (screen_width //2, screen_height //2)
+        text_rectangle.center = (screen_width // 2, screen_height // 2)
         screen.blit(text, text_rectangle)
         screen.blit(idle, (screen_width // 2 - 20, screen_height // 2 - 140))
         pygame.display.update()
@@ -266,4 +266,3 @@ def menu(death_count) :
                 main()
 
 menu(death_count=0)
-pygame.quit()
