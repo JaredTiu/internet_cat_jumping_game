@@ -122,7 +122,7 @@ class Cloud:
 
 
 def main () : 
-    global game_speed, x_position_background, y_position_background
+    global game_speed, x_position_background, y_position_background, points
     run = True 
     clock = pygame.time.Clock()
     player = cat()
@@ -130,6 +130,19 @@ def main () :
     game_speed = 14
     x_position_background = 0
     y_position_background = 360
+    points = 0 
+    font = pygame.font.Font("freesansbold.ttf", 20)
+
+    def score(): 
+        global points, game_speed
+        points += 1
+        if points % 100 == 0: 
+            game_speed += 1
+
+        point_counter = font.render("score: " + str(points), True, (0, 0, 0))
+        point_counter_rect = point_counter.get_rect()
+        point_counter_rect.center = (1000, 40)
+        screen.blit(point_counter, point_counter_rect) 
 
     def background(): 
         global x_position_background, y_position_background
@@ -157,6 +170,8 @@ def main () :
 
         cloud_image.draw(screen)
         cloud_image.update()
+
+        score()
 
         clock.tick(30)
         pygame.display.update()
