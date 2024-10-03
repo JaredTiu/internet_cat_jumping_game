@@ -105,7 +105,7 @@ class cat:
     def draw(self, screen):
         screen.blit(self.image, (self.cat_rectangle.x, self.cat_rectangle.y))
 
-class Cloud:
+class cloud_class:
     def __init__(self):
         self.x = screen_width + random.randint(800, 1000)
         self.y = random.randint(50, 100)
@@ -121,7 +121,7 @@ class Cloud:
     def draw (self, screen):
         screen.blit(self.image, (self.x, self.y))
 
-class obstacle_:
+class obstacle_class:
     def __init__(self, image, type): 
         self.image = image
         self.type = type
@@ -136,19 +136,19 @@ class obstacle_:
     def draw(self, screen):
         screen.blit(self.image[self.type], self.rect)
 
-class small_dog_(obstacle_):
+class small_dog_(obstacle_class):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
         self.rect.y = 290
 
-class big_dog_(obstacle_):
+class big_dog_(obstacle_class):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
         self.rect.y = 270
 
-class bird_(obstacle_):
+class bird_(obstacle_class):
     def __init__(self, image):
         self.type = 0
         super().__init__(image, self.type)
@@ -168,7 +168,7 @@ def main () :
     run = True 
     clock = pygame.time.Clock()
     player = cat()
-    cloud_image = Cloud()
+    cloud_image = cloud_class()
     game_speed = 10
     x_position_background = 0
     y_position_background = 360
@@ -218,14 +218,14 @@ def main () :
             elif random.randint(0, 2) == 2:
                 obstacles.append(bird_(bird))
         
-        for obstacle_ in obstacles:
-            obstacle_.draw(screen)
-            obstacle_.update()
-            if player.cat_rectangle.colliderect(obstacle_.rect):
+        for obstacle_class in obstacles:
+            obstacle_class.draw(screen)
+            obstacle_class.update()
+            if player.cat_rectangle.colliderect(obstacle_class.rect):
                 pygame.time.delay(2000)
                 death_count += 1
                 menu(death_count)
-
+            
         background()
 
         cloud_image.draw(screen)
