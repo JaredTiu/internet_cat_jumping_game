@@ -14,13 +14,13 @@ jumping = pygame.image.load(os.path.join("Assets/64x64", "jumping.png"))
 ducking = [pygame.image.load(os.path.join("Assets/64x64", "duck2.png")),
         pygame.image.load(os.path.join("Assets/64x64", "duck3.png"))]
 
-small_box = [pygame.image.load(os.path.join("Assets/64x64", "Boxsmall1.png")),
-             pygame.image.load(os.path.join("Assets/64x64", "Boxsmall2.png")), 
-             pygame.image.load(os.path.join("Assets/64x64", "Boxsmall3.png")),]
+small_dog = [pygame.image.load(os.path.join("Assets/Bubbas", "spr_BubbaE_0.png")),
+             pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE_1.png")), 
+             pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE_1.png")),]
 
-big_box =  [pygame.image.load(os.path.join("Assets/64x64", "Box1.png")),
-            pygame.image.load(os.path.join("Assets/64x64", "Boxbig2.png")), 
-            pygame.image.load(os.path.join("Assets/64x64", "Boxbig3.png")),]
+big_dog =  [pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE2_0.png")),
+            pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE2_1.png")), 
+            pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE2_2.png")),]
 
 bird = [pygame.image.load(os.path.join("Assets/64x64", "Bird1.png")),
         pygame.image.load(os.path.join("Assets/64x64", "Bird2.png"))]
@@ -134,17 +134,17 @@ class obstacle:
     def draw(self, screen):
         screen.blit(self.image[self.type], self.rect)
 
-class small_box_(obstacle):
+class small_dog_(obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = 325
+        self.rect.y = 290
 
-class big_box_(obstacle):
+class big_dog_(obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = 300
+        self.rect.y = 270
 
 class bird_(obstacle):
     def __init__(self, image):
@@ -167,7 +167,7 @@ def main () :
     clock = pygame.time.Clock()
     player = cat()
     cloud_image = Cloud()
-    game_speed = 14
+    game_speed = 10
     x_position_background = 0
     y_position_background = 360
     points = 0 
@@ -209,9 +209,9 @@ def main () :
 
         if len(obstacles) == 0:
             if random.randint(0, 2) == 0:
-                obstacles.append(small_box_(small_box))
+                obstacles.append(small_dog_(small_dog))
             elif random.randint(0, 2) == 1:
-                obstacles.append(big_box_(big_box))
+                obstacles.append(big_dog_(big_dog))
             elif random.randint(0, 2) == 2:
                 obstacles.append(bird_(bird))
         
