@@ -18,7 +18,7 @@ small_box = [pygame.image.load(os.path.join("Assets/64x64", "Boxsmall1.png")),
              pygame.image.load(os.path.join("Assets/64x64", "Boxsmall2.png")), 
              pygame.image.load(os.path.join("Assets/64x64", "Boxsmall3.png")),]
 
-big_box =  [pygame.image.load(os.path.join("Assets/64x64", "Box.png")),
+big_box =  [pygame.image.load(os.path.join("Assets/64x64", "Box1.png")),
             pygame.image.load(os.path.join("Assets/64x64", "Boxbig2.png")), 
             pygame.image.load(os.path.join("Assets/64x64", "Boxbig3.png")),]
 
@@ -119,10 +119,50 @@ class Cloud:
     def draw (self, screen):
         screen.blit(self.image, (self.x, self.y))
 
+class obstacle:
+    def __init__(self, image, type): 
+        self.image = image
+        self.type = type
+        self.rect = self.image[self.type].get_rect()
+        self.rect.x = screen_width
+
+    def update(self): 
+        self.rect.x -= game_speed
+        if self.rect.x < -self.rect.width: 
+            obstacles.pop()
+
+    def draw(self, screen):
+        screen.blit(self.image[self.type], self.rect)
+
+class small_box_(obstacle):
+    def __init__(self, image):
+        self.type = random.randint(0, 2)
+        super().__init__(image, self.type)
+        self.rect.y = 325
+
+class big_box_(obstacle):
+    def __init__(self, image):
+        self.type = random.randint(0, 2)
+        super().__init__(image, self.type)
+        self.rect.y = 300
+
+class bird_(obstacle):
+    def __init__(self, image):
+        self.type = 0
+        super().__init__(image, self.type)
+        self.rect.y = 250
+        self.index = 0
+
+    def draw(self, screen):
+        if self.index >= 9:
+            self.index = 0
+            screen.blit(self.image[self.index//5], self.rect)
+            self.index += 1
+
 
 
 def main () : 
-    global game_speed, x_position_background, y_position_background, points
+    global game_speed, x_position_background, y_position_background, points, obstacles
     run = True 
     clock = pygame.time.Clock()
     player = cat()
@@ -132,6 +172,7 @@ def main () :
     y_position_background = 360
     points = 0 
     font = pygame.font.Font("freesansbold.ttf", 20)
+    obstacles = []
 
     def score(): 
         global points, game_speed
@@ -165,6 +206,20 @@ def main () :
 
         player.draw(screen)
         player.update(user_input)
+
+        if len(obstacles) == 0:
+            if random.randint(0, 2) == 0:
+                obstacles.append(small_box_(small_box))
+            elif random.randint(0, 2) == 1:
+                obstacles.append(big_box_(big_box))
+            elif random.randint(0, 2) == 2:
+                obstacles.append(bird_(bird))
+        
+        for obstacle in obstacles:
+            obstacle.draw(screen)
+            obstacle.update()
+            if player.cat_rectangle.colliderect(obstacle.rect):
+                pygame.draw.rect(screen, (255, 0, 0), player.cat_rectangle, 2)
 
         background()
 
