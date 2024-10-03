@@ -1,6 +1,7 @@
 import pygame 
 import os 
 import random
+import sys
 
 pygame.init()
 
@@ -13,8 +14,9 @@ running = [pygame.image.load(os.path.join("Assets/64x64", "run1better.png")),
 jumping = pygame.image.load(os.path.join("Assets/64x64", "jumping.png"))
 ducking = [pygame.image.load(os.path.join("Assets/64x64", "duck2.png")),
         pygame.image.load(os.path.join("Assets/64x64", "duck3.png"))]
+idle = pygame.image.load(os.path.join("Assets/64x64", "rest1.png"))
 
-small_dog = [pygame.image.load(os.path.join("Assets/Bubbas", "spr_BubbaE_0.png")),
+small_dog = [pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE_0.png")),
              pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE_1.png")), 
              pygame.image.load(os.path.join("Assets/64x64", "spr_BubbaE_1.png")),]
 
@@ -173,6 +175,7 @@ def main () :
     points = 0 
     font = pygame.font.Font("freesansbold.ttf", 20)
     obstacles = []
+    death_count = 0
 
     def score(): 
         global points, game_speed
@@ -219,7 +222,9 @@ def main () :
             obstacle.draw(screen)
             obstacle.update()
             if player.cat_rectangle.colliderect(obstacle.rect):
-                pygame.draw.rect(screen, (255, 0, 0), player.cat_rectangle, 2)
+                pygame.time.delay(2000)
+                death_count += 1
+                menu(death_count)
 
         background()
 
@@ -233,7 +238,32 @@ def main () :
 
 
 
+def menu(death_count) :
+    global points
+    run = True
+    while run:
+        screen.fill((255, 255, 255))
+        font = pygame.font.Font("freesansbold.ttf", 30)
 
+        if death_count == 0:
+            text = font.render("Press any key to start", True, (0, 0, 0))
+        elif death_count > 0:
+            text = font.render("Press any key to start", True, (0, 0, 0))
+            score = font.render("Score :" + str(points), True, (0, 0, 0))
+            score_rectangle = score.get_rect()
+            score_rectangle.center = (screen_width // 2, screen_height // 2 + 50)
+            screen.blit(score, score_rectangle)
+        text_rectangle = text.get_rect()
+        text_rectangle.center = (screen_width //2, screen_height //2)
+        screen.blit(text, text_rectangle)
+        screen.blit(idle, (screen_width // 2 - 20, screen_height // 2 - 140))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                run = False
+            if event.type == pygame.KEYDOWN:
+                main()
 
-
-main()
+menu(death_count=0)
+pygame.quit()
